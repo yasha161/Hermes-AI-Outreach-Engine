@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes AI Outreach Engine &mdash; Live Interactive Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background-color: #0b0f17; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .glass-card { background: rgba(18, 24, 38, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; }
+    .glow-btn { background: linear-gradient(135deg, #2563eb, #1d4ed8); transition: all 0.2s; box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3); }
+    .glow-btn:hover { background: linear-gradient(135deg, #1d4ed8, #1e40af); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45); }
+    .tab-btn.active { background: rgba(37, 99, 235, 0.15); border-color: #3b82f6; color: #60a5fa; }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center">
+
+  <!-- Header -->
+  <header class="w-full max-w-5xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-800 pb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 text-xl font-bold">
+        ⚡
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+          Hermes AI Outreach Engine
+          <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">Live Demo</span>
+        </h1>
+        <p class="text-sm text-slate-400">Autonomous 24/7 Multi-Timezone Lead Research, Personalization & Dispatch</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-1.5 text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Status: 100% Operational
+      </span>
+      <a href="https://github.com/yasha161/Hermes-Brand-Outreach" target="_blank" class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-2 transition">
+        <i class="fab fa-github"></i> View Repo
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="w-full max-w-5xl">
+
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-800 pb-3">
+      <button onclick="switchTab('tab-research')" id="btn-tab-research" class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium border border-transparent text-slate-300 flex items-center gap-2 transition">
+        <i class="fas fa-search text-blue-400"></i> 1. Live Lead Finder
+      </button>
+      <button onclick="switchTab('tab-pitch')" id="btn-tab-pitch" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium border border-transparent text-slate-300 flex items-center gap-2 transition">
+        <i class="fas fa-magic text-purple-400"></i> 2. AI Pitch Studio
+      </button>
+      <button onclick="switchTab('tab-dispatch')" id="btn-tab-dispatch" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium border border-transparent text-slate-300 flex items-center gap-2 transition">
+        <i class="fas fa-paper-plane text-emerald-400"></i> 3. Live Email Dispatch Sandbox
+      </button>
+      <button onclick="switchTab('tab-proof')" id="btn-tab-proof" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium border border-transparent text-slate-300 flex items-center gap-2 transition">
+        <i class="fas fa-clock text-amber-400"></i> 4. 24/7 Cloud Architecture & Proof
+      </button>
+    </div>
+
+    <!-- TAB 1: Live Lead Finder -->
+    <section id="tab-research" class="tab-content block">
+      <div class="glass-card p-6 mb-6">
+        <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+          <i class="fas fa-radar text-blue-400"></i> Real-Time Autonomous Lead Research
+        </h2>
+        <p class="text-sm text-slate-400 mb-6">
+          Test the automated discovery engine. Enter any target business niche and geographic region to extract public collaboration & inquiry emails live!
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Target Niche</label>
+            <input type="text" id="researchNiche" value="clothing brand" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500" placeholder="e.g. podcast, SaaS, streetwear, fitness coach">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Target Region / City</label>
+            <input type="text" id="researchLocation" value="India" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500" placeholder="e.g. India, UK, USA, Dubai">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Lead Limit</label>
+            <select id="researchCount" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+              <option value="5">5 Leads</option>
+              <option value="8" selected>8 Leads</option>
+              <option value="12">12 Leads</option>
+            </select>
+          </div>
+        </div>
+
+        <button onclick="runLeadSearch()" id="searchBtn" class="glow-btn text-white font-semibold text-sm px-6 py-2.5 rounded-lg flex items-center gap-2">
+          <i class="fas fa-search"></i> Discover Leads Live
+        </button>
+
+        <!-- Results Box -->
+        <div id="researchResults" class="mt-6 hidden">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-semibold text-slate-200">Discovered Leads</h3>
+            <span id="leadCountBadge" class="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full"></span>
+          </div>
+          <div id="leadsList" class="space-y-3 max-h-96 overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: AI Pitch Studio -->
+    <section id="tab-pitch" class="tab-content hidden">
+      <div class="glass-card p-6 mb-6">
+        <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+          <i class="fas fa-wand-magic-sparkles text-purple-400"></i> AI High-Converting Pitch Generator
+        </h2>
+        <p class="text-sm text-slate-400 mb-6">
+          Generate ultra-personalized ~70 word pitches designed with zero fluff and irresistible free-sample offers.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Brand / Prospect Name</label>
+            <input type="text" id="pitchBrand" value="Gymshark" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Service Pitched</label>
+            <select id="pitchService" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+              <option value="ugc_ads">UGC & Product Video Ads</option>
+              <option value="clipping">Podcast & Reel Video Clipping</option>
+              <option value="2d_motion">2D Kinetic & Explainer Motion</option>
+              <option value="content_writing">LinkedIn Ghostwriting</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Your Name (Sender)</label>
+            <input type="text" id="pitchSender" value="Yash Arora" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500">
+          </div>
+        </div>
+
+        <button onclick="generatePitch()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-6 py-2.5 rounded-lg flex items-center gap-2 transition">
+          <i class="fas fa-sparkles"></i> Generate Tailored Pitch
+        </button>
+
+        <div id="pitchOutput" class="mt-6 bg-slate-900/90 border border-slate-800 rounded-xl p-5">
+          <div class="mb-3">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Subject Line:</span>
+            <div id="outSubject" class="text-sm font-semibold text-blue-400 mt-1 select-all">Creative video ad idea for Gymshark</div>
+          </div>
+          <div class="mb-4">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Email Body:</span>
+            <pre id="outBody" class="mt-2 text-sm text-slate-300 whitespace-pre-wrap font-sans bg-slate-950/60 p-4 rounded-lg border border-slate-800 select-all"></pre>
+          </div>
+          <button onclick="loadToSandbox()" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 px-4 py-2 rounded-lg text-white font-medium flex items-center gap-2 transition">
+            <i class="fas fa-arrow-right"></i> Load this Pitch into Dispatch Sandbox
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Live Email Dispatch Sandbox -->
+    <section id="tab-dispatch" class="tab-content hidden">
+      <div class="glass-card p-6 mb-6">
+        <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+          <i class="fas fa-paper-plane text-emerald-400"></i> Live Email Dispatch Sandbox
+        </h2>
+        <p class="text-sm text-slate-400 mb-6">
+          Test real-time delivery! Enter your personal email address below to receive an actual test pitch in your inbox in 3 seconds.
+        </p>
+
+        <!-- Credentials Mode Switch -->
+        <div class="mb-6 p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+          <div>
+            <div class="text-sm font-semibold text-white">Sender Account Mode</div>
+            <div class="text-xs text-slate-400">Choose whether to send using the pre-configured Demo Sender or your own Gmail.</div>
+          </div>
+          <div class="flex items-center gap-4">
+            <label class="flex items-center gap-2 text-sm cursor-pointer">
+              <input type="radio" name="senderMode" value="demo" checked onchange="toggleCreds(false)" class="text-blue-500">
+              <span>Demo Sender (Instant)</span>
+            </label>
+            <label class="flex items-center gap-2 text-sm cursor-pointer">
+              <input type="radio" name="senderMode" value="custom" onchange="toggleCreds(true)" class="text-blue-500">
+              <span>My Own Gmail Credentials</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Custom Creds Form (Hidden by default) -->
+        <div id="customCredsBox" class="hidden mb-6 p-4 rounded-xl bg-slate-950/80 border border-slate-700/60">
+          <h3 class="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-3">Your Gmail Credentials</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-slate-300 mb-1">Your Gmail Address</label>
+              <input type="email" id="customUser" placeholder="yourname@gmail.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-slate-300 mb-1">Google App Password (16 characters)</label>
+              <input type="password" id="customPass" placeholder="xxxx xxxx xxxx xxxx" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+          </div>
+        </div>
+
+        <!-- Dispatch Form -->
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">Recipient Test Email (Enter your email)</label>
+              <input type="email" id="targetEmail" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Enter where you want to receive the email">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">Sender Name</label>
+              <input type="text" id="targetSenderName" value="Yash Arora" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Subject</label>
+            <input type="text" id="targetSubject" value="Quick reel idea for your brand" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Email Body</label>
+            <textarea id="targetBody" rows="5" class="w-full bg-slate-900/90 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-emerald-500 font-sans">Hey there,
+
+Loved what you're creating—really smart concept!
+
+I specialize in high-retention short-form video production & motion graphics. I'd love to produce 1 short sample reel for your brand 100% free of charge so you can test the quality.
+
+Would you be open to taking a look?
+
+Best,
+Yash Arora</textarea>
+          </div>
+
+          <button onclick="sendTestEmail()" id="sendBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-7 py-3 rounded-lg flex items-center gap-2 transition">
+            <i class="fas fa-paper-plane"></i> Send Test Pitch Live
+          </button>
+
+          <div id="sendStatusBox" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: 24/7 Cloud Architecture & Proof -->
+    <section id="tab-proof" class="tab-content hidden">
+      <div class="glass-card p-6 mb-6">
+        <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+          <i class="fas fa-server text-amber-400"></i> Autonomous Multi-Timezone Architecture
+        </h2>
+        <p class="text-sm text-slate-400 mb-6">
+          The engine operates 24/7 in the cloud on GitHub Actions, running multi-timezone batches and monitoring replies even when computers are shut down.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-blue-400 uppercase">Batch 1: Morning</span>
+              <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">10:00 AM IST</span>
+            </div>
+            <div class="text-sm font-semibold text-white mb-1">India & Asia Markets</div>
+            <div class="text-xs text-slate-400">Local brands & creators active during morning hours. (10 Emails + 10 Twitter Snipes)</div>
+          </div>
+
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-purple-400 uppercase">Batch 2: Afternoon</span>
+              <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">03:30 PM IST</span>
+            </div>
+            <div class="text-sm font-semibold text-white mb-1">UK, Europe & Dubai</div>
+            <div class="text-xs text-slate-400">Synchronized with morning & noon in London, Berlin & Dubai. (10 Emails + 10 Twitter Snipes)</div>
+          </div>
+
+          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-emerald-400 uppercase">Batch 3: Night</span>
+              <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">10:00 PM IST</span>
+            </div>
+            <div class="text-sm font-semibold text-white mb-1">USA, Canada & LATAM</div>
+            <div class="text-xs text-slate-400">Peak daytime in New York & California ($500-$1,500 gigs). (10 Emails + 10 Twitter Snipes)</div>
+          </div>
+        </div>
+
+        <!-- Real Case Study -->
+        <div class="border border-emerald-500/30 bg-emerald-950/20 rounded-xl p-5">
+          <div class="flex items-center gap-2 text-emerald-400 font-semibold text-sm mb-2">
+            <i class="fas fa-check-circle"></i> Live Case Study: Pankhuri Mishra (Closed in 10 mins)
+          </div>
+          <div class="text-xs text-slate-300 space-y-1.5 leading-relaxed">
+            <p>• <b>10:02 AM</b>: Hermes morning batch dispatched cold pitch to <i>Pankhuri Mishra</i> (Lifestyle & Video Creator).</p>
+            <p>• <b>10:12 AM</b>: Client replied: <i>"Sure. Thanks you. Why not!"</i></p>
+            <p>• <b>11:27 AM</b>: Hermes Cloud Listener caught unread reply, triggered Telegram alert to phone, and delivered automated follow-up via SMTP.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-xs text-slate-500 mt-8">
+    Hermes Autonomous Outreach Engine &bull; Developed by Yash Arora &bull; Powered by Nous Hermes & AI
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).classList.remove('hidden');
+      document.getElementById('btn-' + tabId).classList.add('active');
+    }
+
+    function toggleCreds(isCustom) {
+      document.getElementById('customCredsBox').classList.toggle('hidden', !isCustom);
+    }
+
+    async function runLeadSearch() {
+      const niche = document.getElementById('researchNiche').value.trim();
+      const location = document.getElementById('researchLocation').value.trim();
+      const count = document.getElementById('researchCount').value;
+      const btn = document.getElementById('searchBtn');
+      const resultsBox = document.getElementById('researchResults');
+      const list = document.getElementById('leadsList');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Researching Leads...';
+
+      try {
+        const res = await fetch('/api/search-leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ niche, location, count })
+        });
+        const data = await res.json();
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-search"></i> Discover Leads Live';
+
+        if (data.success && data.leads.length > 0) {
+          resultsBox.classList.remove('hidden');
+          document.getElementById('leadCountBadge').innerText = data.leads.length + ' Leads Found';
+          list.innerHTML = data.leads.map(lead => `
+            <div class="p-3.5 rounded-lg bg-slate-900 border border-slate-800 flex justify-between items-start gap-4">
+              <div class="space-y-1">
+                <div class="text-sm font-semibold text-white flex items-center gap-2">
+                  ${lead.brand_name}
+                  <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono">${lead.email}</span>
+                </div>
+                <div class="text-xs text-slate-400 line-clamp-2">${lead.snippet}</div>
+              </div>
+              <button onclick="pitchThisLead('${lead.brand_name.replace(/'/g, "\\'")}', '${lead.email}')" class="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded font-medium shrink-0 transition">
+                Pitch This Brand
+              </button>
+            </div>
+          `).join('');
+        } else {
+          resultsBox.classList.remove('hidden');
+          list.innerHTML = '<div class="text-sm text-slate-400 p-4 text-center">No public emails found for this query. Try broadening the niche keywords.</div>';
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-search"></i> Discover Leads Live';
+        alert('Search error: ' + err.message);
+      }
+    }
+
+    function pitchThisLead(name, email) {
+      document.getElementById('pitchBrand').value = name;
+      document.getElementById('targetEmail').value = email;
+      switchTab('tab-pitch');
+      generatePitch();
+    }
+
+    async function generatePitch() {
+      const brand = document.getElementById('pitchBrand').value;
+      const service = document.getElementById('pitchService').value;
+      const sender = document.getElementById('pitchSender').value;
+
+      const res = await fetch('/api/generate-pitch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brand_name: brand, service, sender_name: sender })
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('outSubject').innerText = data.subject;
+        document.getElementById('outBody').innerText = data.body;
+      }
+    }
+
+    function loadToSandbox() {
+      document.getElementById('targetSubject').value = document.getElementById('outSubject').innerText;
+      document.getElementById('targetBody').value = document.getElementById('outBody').innerText;
+      document.getElementById('targetSenderName').value = document.getElementById('pitchSender').value;
+      switchTab('tab-dispatch');
+    }
+
+    async function sendTestEmail() {
+      const isCustom = document.querySelector('input[name="senderMode"]:checked').value === 'custom';
+      const targetEmail = document.getElementById('targetEmail').value.trim();
+      const senderName = document.getElementById('targetSenderName').value.trim();
+      const subject = document.getElementById('targetSubject').value.trim();
+      const body = document.getElementById('targetBody').value.trim();
+      const btn = document.getElementById('sendBtn');
+      const statusBox = document.getElementById('sendStatusBox');
+
+      if (!targetEmail) {
+        alert('Please enter a recipient test email address!');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Dispatching over SMTP...';
+      statusBox.classList.add('hidden');
+
+      const payload = {
+        use_custom_creds: isCustom,
+        gmail_user: isCustom ? document.getElementById('customUser').value.trim() : '',
+        gmail_password: isCustom ? document.getElementById('customPass').value.trim() : '',
+        sender_name: senderName,
+        recipient_email: targetEmail,
+        subject,
+        body
+      };
+
+      try {
+        const res = await fetch('/api/send-test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Test Pitch Live';
+
+        statusBox.classList.remove('hidden');
+        if (data.success) {
+          statusBox.className = 'mt-4 p-4 rounded-xl text-sm bg-emerald-950/40 border border-emerald-500/50 text-emerald-300';
+          statusBox.innerHTML = `<b>&#10004; Email Delivered Successfully!</b><br>Sent to: <code>${data.recipient}</code> via <code>${data.sender}</code> at ${data.timestamp}. Check your inbox!`;
+        } else {
+          statusBox.className = 'mt-4 p-4 rounded-xl text-sm bg-rose-950/40 border border-rose-500/50 text-rose-300';
+          statusBox.innerHTML = `<b>&#10006; Delivery Failed:</b> ${data.error}`;
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Test Pitch Live';
+        statusBox.classList.remove('hidden');
+        statusBox.className = 'mt-4 p-4 rounded-xl text-sm bg-rose-950/40 border border-rose-500/50 text-rose-300';
+        statusBox.innerHTML = `<b>&#10006; Request Error:</b> ${err.message}`;
+      }
+    }
+
+    // Initialize initial pitch
+    generatePitch();
+  </script>
+</body>
+</html>

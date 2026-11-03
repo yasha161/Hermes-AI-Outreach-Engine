@@ -1,0 +1,44 @@
+name: Hermes 24/7 Cloud Inbox Listener & Auto-Responder
+
+on:
+  schedule:
+    # Runs every 20 minutes, 24/7 across the globe
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  inbox_job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests python-dotenv
+
+      - name: Run Autonomous Inbox Listener
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SENDER_NAME: ${{ secrets.SENDER_NAME }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python auto_inbox_listener.py
+
+      - name: Save Replies History
+        run: |
+          git config --global user.name "Hermes Cloud Agent"
+          git config --global user.email "hermes@nousresearch.com"
+          git add leads/replies_history.json || true
+          git commit -m "chore(replies): update lead reply history [skip ci]" || true
+          git push || true

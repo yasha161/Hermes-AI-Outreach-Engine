@@ -1,0 +1,60 @@
+name: Hermes 24/7 Cloud Twitter Outreach
+
+on:
+  schedule:
+    # 3 Multi-Timezone Batches Daily (10 Tweets Each = 30 Daily Pitches):
+    # Morning: 04:30 UTC = 10:00 AM IST (India & Asia)
+    - cron: '30 4 * * *'
+    # Afternoon: 10:00 UTC = 03:30 PM IST (UK, Europe & Dubai)
+    - cron: '0 10 * * *'
+    # Night: 16:30 UTC = 10:00 PM IST (USA & Canada - Peak Daytime!)
+    - cron: '30 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  twitter_outreach_job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies & Playwright Browser
+        run: |
+          pip install playwright requests python-dotenv
+          playwright install --with-deps chromium
+
+      - name: Determine Target Batch by Time
+        id: pick_batch
+        run: |
+          HOUR=$(date -u +%H)
+          if [ "$HOUR" -ge 4 ] && [ "$HOUR" -lt 9 ]; then
+            echo "batch=morning" >> $GITHUB_OUTPUT
+          elif [ "$HOUR" -ge 9 ] && [ "$HOUR" -lt 15 ]; then
+            echo "batch=afternoon" >> $GITHUB_OUTPUT
+          else
+            echo "batch=night" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Execute Autonomous Twitter Outreach
+        env:
+          TWITTER_AUTH_TOKEN: ${{ secrets.TWITTER_AUTH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
+          SENDER_NAME: ${{ secrets.SENDER_NAME }}
+        run: |
+          python twitter_brand_outreach.py --batch ${{ steps.pick_batch.outputs.batch }} --count 10 --no-jitter
+
+      - name: Save Twitter Outreach History
+        run: |
+          git config --global user.name "Hermes Cloud Agent"
+          git config --global user.email "hermes@nousresearch.com"
+          git add leads/twitter_history.json || true
+          git commit -m "chore(twitter): update sniped tweets history from cloud batch [skip ci]" || true
+          git push || true

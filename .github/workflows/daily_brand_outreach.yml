@@ -1,0 +1,60 @@
+name: Hermes 24/7 Cloud Brand Outreach
+
+on:
+  schedule:
+    # 3 Times a Day UTC:
+    # Morning: 04:30 UTC = 10:00 AM IST (India & Asia)
+    - cron: '30 4 * * *'
+    # Afternoon: 10:00 UTC = 03:30 PM IST (UK & Europe)
+    - cron: '0 10 * * *'
+    # Night: 16:30 UTC = 10:00 PM IST (USA, Canada, Mexico, Brazil - Peak Daytime!)
+    - cron: '30 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  outreach_job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install ddgs requests beautifulsoup4 python-dotenv
+
+      - name: Determine Target Batch by Time
+        id: pick_batch
+        run: |
+          HOUR=$(date -u +%H)
+          if [ "$HOUR" -ge 4 ] && [ "$HOUR" -lt 9 ]; then
+            echo "batch=morning" >> $GITHUB_OUTPUT
+          elif [ "$HOUR" -ge 9 ] && [ "$HOUR" -lt 15 ]; then
+            echo "batch=afternoon" >> $GITHUB_OUTPUT
+          else
+            echo "batch=night" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Execute Autonomous Outreach
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SENDER_NAME: ${{ secrets.SENDER_NAME }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
+        run: |
+          python auto_brand_outreach.py --batch ${{ steps.pick_batch.outputs.batch }} --count 10 --no-jitter
+
+      - name: Save Delivery History
+        run: |
+          git config --global user.name "Hermes Cloud Agent"
+          git config --global user.email "hermes@nousresearch.com"
+          git add leads/sent_history.json leads/leads.csv || true
+          git commit -m "chore(leads): update sent history from cloud batch [skip ci]" || true
+          git push || true

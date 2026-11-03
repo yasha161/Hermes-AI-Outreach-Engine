@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+twitter_session.json
+leads/sent_history.json
+leads/twitter_history.json
+leads/replies_history.json
